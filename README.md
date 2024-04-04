@@ -3,14 +3,14 @@
   <summary>Table of Contents</summary>
   <ul>
     <li><a href="#about-the-project">About the Project</a></li>
-    <li><a href="#about-the-project">Tools Used</a></li>
-    <li><a href="#usage">Set up instruction</a></li>
-    <li><a href="#how-to-compute-faqs">Prepare the knowledge base</a></li>
-    <li><a href="#contributing">Run as a api</a></li>
-    <li><a href="#getting-started">Run from cmd</a></li>
+    <li><a href="#tools-used">Tools Used</a></li>
+    <li><a href="#set-up-instruction">Set up instruction</a></li>
+    <li><a href="#prepare-knowledge-base">Prepare the knowledge base</a></li>
+    <li><a href="#run-as-api">Run as a api</a></li>
+    <li><a href="#run-as-cmd">Run from cmd</a></li>
   </ul>
 </details>
-<!-- END OF PROJECT TITLE -->
+<!-- END OF TABLE OF CONTENTS -->
 
 <!-- ABOUT THE PROJECT -->
 ## About the Project
@@ -31,7 +31,7 @@ List of tools/languages the product uses
 <!-- END OF ABOUT THE PROJECT -->
 
 
-<!-- USAGE -->
+<!-- SET UP INSTRUCTION -->
 ## Set up instruction
 Follow the steps below to run the application
 
@@ -59,10 +59,12 @@ pip install pipenv
 pipenv install
 ```
 3. Change your IDE settings accordingly to use the created virtual environment
+<!-- END OF SET UP INSTRUCTION -->
 
+<!-- PREPARE KNOWLEDGE BASE -->
 ## Prepare the knowledge base
 To prepare the knowledge base just add pdf documents under the docs folder
-
+<!-- END OF PREPARE KNOWLEDGE BASE -->
 
 <!-- RUN AS API -->
 ## Run as a api
