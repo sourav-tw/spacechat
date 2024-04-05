@@ -1,8 +1,50 @@
-version: '3'
+version: '3.8'
 services:
   ollama:
-    image: ollama/ollama
+    image: ollama/ollama:latest
+    mem_limit: 3g
+    cpus: 4
+    entrypoint: sh -c "ollama serve && ollama pull tinyllama"
+    networks:
+      - ollama-docker
     volumes:
       - /private/var/services/ollama:/root/.ollama
     ports:
       - 11434:11434
+  db:
+    image: postgres:alpine3.19
+    shm_size: 128mb
+    restart: always
+    networks:
+      - ollama-docker
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ollama
+      POSTGRES_PASSWORD: ollama
+      POSTGRES_DB: ollamadb
+    ports:
+      - 5432:5432
+  langfuse:
+    image: ghcr.io/langfuse/langfuse:latest
+    platform: linux/amd64
+    networks:
+      - ollama-docker
+    depends_on:
+      # - ollama
+      - db
+    environment:
+      DATABASE_URL: postgresql://ollama:ollama@db:5432/ollamadb
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: mysecret
+      SALT: mysalt
+    ports:
+      - 3000:3000
+volumes:
+  db:
+    driver: local
+networks:
+  ollama-docker:
+    external: false
+
+
