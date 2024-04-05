@@ -81,7 +81,8 @@ pipenv install
 
 <!-- PREPARE KNOWLEDGE BASE -->
 ## Prepare the knowledge base
-To prepare the knowledge base just add pdf documents under the docs folder
+1. To prepare the knowledge base create a docs folder in the root of the project directory
+2. Add pdf documents under the docs folder
 <!-- END OF PREPARE KNOWLEDGE BASE -->
 
 <!-- RUN AS API -->
