@@ -20,3 +20,5 @@ CHUNK_OVERLAP = int(os.getenv('CHUNK_OVERLAP', 150))
 REQUEST_TIMEOUT = int(os.getenv('REQUEST_TIMEOUT', 60))
 
 DOCUMENTS_DIR = os.getenv('DOCUMENTS_DIR', "./docs")
+
+COLLECTION_NAME = os.getenv('COLLECTION_NAME', "space-chat")

@@ -12,9 +12,9 @@ from prompts import get_template
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-
 global query_engine
 query_engine = None
+
 
 def init_llm():
     llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
@@ -22,8 +22,8 @@ def init_llm():
 
     Settings.llm = llm
     Settings.embed_model = embed_model
-    Settings.chunk_size = 1000
-    Settings.chunk_overlap = 150
+    Settings.chunk_size = CHUNK_SIZE
+    Settings.chunk_overlap = CHUNK_OVERLAP
 
 
 def init_index():
@@ -33,7 +33,7 @@ def init_index():
     logging.info("index creating with `%d` documents", len(documents))
 
     chroma_client = chromadb.EphemeralClient()
-    chroma_collection = chroma_client.create_collection("iollama")
+    chroma_collection = chroma_client.create_collection(COLLECTION_NAME)
 
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
@@ -65,6 +65,7 @@ def chat(input_question):
     global query_engine
     response = query_engine.query(input_question)
     return response
+
 
 # Its a simple chat command line interface
 def chat_cmd():

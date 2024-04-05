@@ -26,6 +26,7 @@ List of tools/languages the product uses
 - [x] LlamaIndex
 - [x] ChromaDB
 - [ ] Gradio
+- [ ] Langfuse
 
 
 <!-- END OF ABOUT THE PROJECT -->
@@ -51,12 +52,19 @@ ollama serve
 
 ## Install and run with python virtual environment
 
-1. Set up a virtual environment using the command `python3 -m venv venv`.
-2. Activate the virtual environment using the command `source venv/bin/activate`.
+1. Set up a virtual environment using the command 
+``` bash
+python3 -m venv venv
+```
+2. Activate the virtual environment using the command 
+``` bash
+source venv/bin/activate
+```
 3. Change your IDE settings accordingly to use the created virtual environment
-4. Install the required dependencies using the command `pip install -r requirements.txt`.
-5. Run the application using the command `python app.py`.
-6. Access the application in your browser at `http://localhost:5000`.
+4. Install the required dependencies using the command
+``` bash 
+pip install -r requirements.txt
+```
 
 ### Install and run with pipenv
 1. We are using pipenv to control the dependency and virtual environment. Install pipenv using the following command
@@ -78,10 +86,11 @@ To prepare the knowledge base just add pdf documents under the docs folder
 
 <!-- RUN AS API -->
 ## Run as a api
-To run this as an api, run the following command
+1. To run this as an api, run the following command
 ``` bash
 python app.py
 ```
+2. Access the application in your browser at `http://localhost:5000`.
 <!-- END OF RUN AS API -->
 
 <!-- RUN AS CMD -->
