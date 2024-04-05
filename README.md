@@ -39,16 +39,26 @@ Follow the steps below to run the application
 
 1. Download Ollama from https://ollama.com and install following the instructions
 2. Follow instructions to enable ollama cli command
-3. Run the the following command to pull mistral 7b locally
+3. Run the the following command to pull llama2 7b locally
 ``` bash
-ollama pull mistral
+ollama pull llama2
 ```
 4. Once the model is pulled, run the following command to start running ollama service
 ``` bash
 ollama serve
 ```
 *⚠️ This will start the application in default port. If you see an error that means Ollama is alrady running  
-### Install and run pipenv
+
+## Install and run with python virtual environment
+
+1. Set up a virtual environment using the command `python3 -m venv venv`.
+2. Activate the virtual environment using the command `source venv/bin/activate`.
+3. Change your IDE settings accordingly to use the created virtual environment
+4. Install the required dependencies using the command `pip install -r requirements.txt`.
+5. Run the application using the command `python app.py`.
+6. Access the application in your browser at `http://localhost:5000`.
+
+### Install and run with pipenv
 1. We are using pipenv to control the dependency and virtual environment. Install pipenv using the following command
 ``` bash
 pip install pipenv

@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, Response, stream_with_context
 from flask import request
 from flask_cors import CORS
 import logging
@@ -16,17 +15,15 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s -
 def post_question():
     json = request.get_json(silent=True)
     question = json['question']
-    user_id = json['user_id']
-    logging.info("post question `%s` for user `%s`", question, user_id)
-
-    resp = chat(question, user_id)
-    data = {'answer':resp}
-
-    return jsonify(data), 200
+    logging.info("post question `%s`", question)
+    def generate_response():
+        resp = chat(question)
+        for chunk in resp.response_gen:
+            yield chunk
+    return Response(stream_with_context(generate_response()))
 
 if __name__ == '__main__':
     init_llm()
-    index = init_index(Settings.embed_model)
+    index = init_index()
     init_query_engine(index)
-
     app.run(host='0.0.0.0', port=HTTP_PORT, debug=True)
