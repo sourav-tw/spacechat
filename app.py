@@ -11,16 +11,20 @@ CORS(app)
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 @app.route('/api/question', methods=['POST'])
 def post_question():
     json = request.get_json(silent=True)
     question = json['question']
     logging.info("post question `%s`", question)
+
     def generate_response():
         resp = chat(question)
         for chunk in resp.response_gen:
             yield chunk
+
     return Response(stream_with_context(generate_response()))
+
 
 if __name__ == '__main__':
     init_llm()

@@ -77,6 +77,21 @@ pip install pipenv
 pipenv install
 ```
 3. Change your IDE settings accordingly to use the created virtual environment
+
+### Configure the observability using langfuse
+1. Follow the below steps to configure langfuse
+``` bash
+git clone https://github.com/langfuse/langfuse.git
+cd langfuse
+docker compose up
+```
+2. Once it is up and running you can access the observability at `http://localhost:3000`
+3. Create a new user id and password to sign in
+4. Create a api key from settings and copy the secret key and public key under environment variable as shown:
+    `LANGFUSE_SECRET_KEY=sk-<secret_key>`
+    `LANGFUSE_PUBLIC_KEY=pk-<public_key>`
+    `LANGFUSE_HOST=http://127.0.0.1:3000`
+5. Create a prompt (sample given under samples) from the UI and reference the prompt name in env variable under `PROMPT_TEMPLATE` variable name.
 <!-- END OF SET UP INSTRUCTION -->
 
 <!-- PREPARE KNOWLEDGE BASE -->

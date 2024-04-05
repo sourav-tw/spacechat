@@ -4,9 +4,17 @@ import sys
 
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.core import (Settings, VectorStoreIndex, SimpleDirectoryReader)
-from llama_index.core import StorageContext
+from llama_index.core import (
+    Settings,
+    VectorStoreIndex,
+    SimpleDirectoryReader,
+    StorageContext
+)
+from llama_index.core.callbacks import CallbackManager
 from llama_index.vector_stores.chroma import ChromaVectorStore
+
+from langfuse.llama_index import LlamaIndexCallbackHandler
+
 from config import *
 from prompts import get_template
 
@@ -19,11 +27,13 @@ query_engine = None
 def init_llm():
     llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
+    langfuse_callback_handler = LlamaIndexCallbackHandler()
 
     Settings.llm = llm
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
+    Settings.callback_manager = CallbackManager([langfuse_callback_handler])
 
 
 def init_index():
