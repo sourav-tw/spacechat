@@ -1,12 +1,8 @@
 import os
+from dotenv import load_dotenv
 
-# define init index
-INIT_INDEX = os.getenv('INIT_INDEX', 'false').lower() == 'true'
+load_dotenv()
 
-# vector index persist directory
-INDEX_PERSIST_DIRECTORY = os.getenv('INDEX_PERSIST_DIRECTORY', "./data/chromadb")
-
-# http api port
 HTTP_PORT = os.getenv('HTTP_PORT', 5000)
 
 LLM_MODEL = os.getenv('LLM_MODEL', "mistral")
@@ -19,8 +15,12 @@ CHUNK_OVERLAP = int(os.getenv('CHUNK_OVERLAP', 150))
 
 REQUEST_TIMEOUT = int(os.getenv('REQUEST_TIMEOUT', 60))
 
-DOCUMENTS_DIR = os.getenv('DOCUMENTS_DIR', "./docs")
+DOCUMENTS_DIR = os.getenv('DOCUMENTS_DIR', "../docs")
 
 COLLECTION_NAME = os.getenv('COLLECTION_NAME', "space-chat")
 
 PROMPT_TEMPLATE = os.getenv('PROMPT_TEMPLATE', "SPACE_CHAT_PROMPT")
+
+LANGFUSE_PUBLIC_KEY = os.getenv('LANGFUSE_PUBLIC_KEY')
+
+LANGFUSE_SECRET_KEY = os.getenv('LANGFUSE_SECRET_KEY')

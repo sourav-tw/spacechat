@@ -3,7 +3,7 @@ from flask import request
 from flask_cors import CORS
 import logging
 import sys
-from model import *
+from query_model import *
 from config import *
 
 app = Flask(__name__)
