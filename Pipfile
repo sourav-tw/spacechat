@@ -16,6 +16,8 @@ llama-index-llms-ollama = "==0.1.2"
 llama-index-vector-stores-chroma = "==0.1.6"
 langfuse = "*"
 python-dotenv = "==1.0.1"
+gradio = "== 4.25.0"
+requests= "~=2.31.0"
 
 [dev-packages]
 

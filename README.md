@@ -25,8 +25,8 @@ List of tools/languages the product uses
 - [x] Ollama
 - [x] LlamaIndex
 - [x] ChromaDB
-- [ ] Gradio
-- [ ] Langfuse
+- [x] Gradio
+- [x] Langfuse
 
 
 <!-- END OF ABOUT THE PROJECT -->
