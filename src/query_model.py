@@ -1,22 +1,19 @@
-import chromadb
 import logging
 import sys
 
-from llama_index.llms.ollama import Ollama
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+import chromadb
 from llama_index.core import (
     Settings,
     VectorStoreIndex,
     SimpleDirectoryReader,
     StorageContext
 )
-from llama_index.core.callbacks import CallbackManager
-from llama_index.core.memory import ChatMemoryBuffer
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
-from langfuse.llama_index import LlamaIndexCallbackHandler
-
 from config import *
+from langfuse_integration import init_langfuse
 from prompts import get_template
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -28,13 +25,11 @@ query_engine = None
 def init_llm():
     llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
-    langfuse_callback_handler = LlamaIndexCallbackHandler()
-
     Settings.llm = llm
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
-    Settings.callback_manager = CallbackManager([langfuse_callback_handler])
+    init_langfuse()
 
 
 def init_index():
@@ -59,7 +54,6 @@ def init_index():
 
 def init_query_engine(index):
     global query_engine
-    memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
 
     # custom prompt template
     qa_template = get_template()
@@ -68,13 +62,7 @@ def init_query_engine(index):
     # text_qa_template specifies custom template
     # similarity_top_k configure the retriever to return the top 3 most similar documents,
     # the default value of similarity_top_k is 2
-    query_engine = index.as_chat_engine(
-        streaming=True,
-        text_qa_template=qa_template,
-        similarity_top_k=3,
-        chat_mode="context",
-        memory=memory
-    )
+    query_engine = index.as_query_engine(streaming=True, text_qa_template=qa_template, similarity_top_k=3)
 
     return query_engine
 
@@ -85,11 +73,11 @@ def chat(input_question):
     return response
 
 
-# Its a simple chat command line interface
+# It's a simple chat command line interface
 def chat_cmd():
     global query_engine
     while (input_question := input("Enter your question (or 'exit' to quit): ")) != 'exit':
-        response = query_engine.stream_chat(input_question)
+        response = query_engine.query(input_question)
         response.print_response_stream()
 
 

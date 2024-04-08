@@ -25,8 +25,8 @@ List of tools/languages the product uses
 - [x] Ollama
 - [x] LlamaIndex
 - [x] ChromaDB
-- [ ] Gradio
-- [ ] Langfuse
+- [x] Gradio
+- [x] Langfuse
 
 
 <!-- END OF ABOUT THE PROJECT -->
@@ -78,6 +78,10 @@ pipenv install
 ```
 3. Change your IDE settings accordingly to use the created virtual environment
 
+### Set up the environment variables
+1. Create a .env file in the root of the project directory
+2. Refer the .env.example file for the environment variables to be set in the .env
+
 ### Configure the observability using langfuse
 1. Follow the below steps to configure langfuse
 ``` bash
@@ -87,7 +91,7 @@ docker compose up
 ```
 2. Once it is up and running you can access the observability at `http://localhost:3000`
 3. Create a new user id and password to sign in
-4. Create a api key from settings and copy the secret key and public key under environment variable as shown:
+4. Create a api key from settings and copy the secret key and public key in .env file as shown:
     `LANGFUSE_SECRET_KEY=sk-<secret_key>`
     `LANGFUSE_PUBLIC_KEY=pk-<public_key>`
     `LANGFUSE_HOST=http://127.0.0.1:3000`
@@ -104,7 +108,7 @@ docker compose up
 ## Run as a api
 1. To run this as an api, run the following command
 ``` bash
-python app.py
+python api.py
 ```
 2. Access the application in your browser at `http://localhost:5000`.
 <!-- END OF RUN AS API -->
@@ -113,6 +117,6 @@ python app.py
 ## Run from cmd
 To run this from a terminal or command prompt, run the following command
 ``` bash
-python model.py
+python query_model.py
 ```
 <!-- END OF RUN AS CMD -->
