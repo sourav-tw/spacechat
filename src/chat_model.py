@@ -15,7 +15,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 
 from langfuse_integration import init_langfuse
 from prompts import get_template
-from src.config import *
+from config import *
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
