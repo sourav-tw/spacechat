@@ -7,9 +7,12 @@ def chat(question, history):
     data = {"question": question}
     req = requests.session()
     response = req.post(url, json=data, stream=True)
+    assistant_response = "assistant: "
     for line in response.iter_lines():
         if line:
-            yield "assistant: " + line.decode("utf-8")
+            assistant_response += line.decode("utf-8") + "\n"
+            yield assistant_response
+    history.append((question, assistant_response))
 
 
 gr.ChatInterface(chat).launch()
