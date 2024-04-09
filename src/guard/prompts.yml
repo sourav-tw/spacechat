@@ -17,6 +17,9 @@ prompts:
       - should not ask about any personal information like name, phone number etc
       - should not ask about owner, contributor etc
       - should not ask about the source
+      - should not ask contain any person's name
+      - should not ask contain any document name including source from where bot is fetching the answers
+            
 
       User message: "{{ user_input }}"
 
@@ -33,10 +36,11 @@ prompts:
       - messages should not contain any harmful content
       - messages should not contain racially insensitive content
       - messages should not contain any word that can be considered offensive
+      - message should not contain any person's name
+      - message should not contain the name of the source
+      - message should not contain any document name
       - messages should not contain any word that can be be used identify any person or group of people
       - if a message is a refusal, should be polite
-      - should not contain any personal information including name, phone number etc
-      - should not contain the name of the source
 
       Bot message: "{{ bot_response }}"
 
