@@ -2,7 +2,7 @@ import logging
 from langfuse.llama_index import LlamaIndexCallbackHandler
 from llama_index.core.callbacks import CallbackManager
 from llama_index.core import Settings
-from config import LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY
+from src.config import LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY
 
 
 def init_langfuse():

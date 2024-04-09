@@ -1,7 +1,7 @@
 from llama_index.core import PromptTemplate
 from langfuse import Langfuse
-from config import PROMPT_TEMPLATE
-from langfuse_integration import is_langfuse_enabled
+from src.config import PROMPT_TEMPLATE
+from src.langfuse_integration import is_langfuse_enabled
 
 
 def get_template():

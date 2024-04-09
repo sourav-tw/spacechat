@@ -8,28 +8,44 @@ from llama_index.core import (
     SimpleDirectoryReader,
     StorageContext
 )
+from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.chroma import ChromaVectorStore
+from llama_index.core.base.response.schema import StreamingResponse
 
-from config import *
-from langfuse_integration import init_langfuse
-from prompts import get_template
+from nemoguardrails.actions import action
+from nemoguardrails import LLMRails, RailsConfig
+
+from src.langfuse_integration import init_langfuse
+from src.prompts import get_template
+from src.config import *
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-global query_engine
-query_engine = None
+query_engine_cache = None
+global rails
+
+
+def chat(input_question):
+    global rails
+    res = rails.generate(prompt=input_question)
+    return res
 
 
 def init_llm():
+    global rails
     llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
+
     Settings.llm = llm
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
     init_langfuse()
+
+    guard = RailsConfig.from_path("./guard")
+    rails = LLMRails(guard)
 
 
 def init_index():
@@ -52,9 +68,14 @@ def init_index():
     return index
 
 
-def init_query_engine(index):
-    global query_engine
+def init_query_engine():
+    global query_engine_cache
+    if query_engine_cache is not None:
+        print('Using cached query engine')
+        return query_engine_cache
+    # memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
 
+    index = init_index()
     # custom prompt template
     qa_template = get_template()
 
@@ -62,27 +83,33 @@ def init_query_engine(index):
     # text_qa_template specifies custom template
     # similarity_top_k configure the retriever to return the top 3 most similar documents,
     # the default value of similarity_top_k is 2
-    query_engine = index.as_query_engine(streaming=True, text_qa_template=qa_template, similarity_top_k=3)
-
-    return query_engine
-
-
-def chat(input_question):
-    global query_engine
-    response = query_engine.query(input_question)
-    return response
+    query_engine_cache = index.as_query_engine(
+        streaming=True,
+        text_qa_template=qa_template,
+        similarity_top_k=3
+    )
+    return query_engine_cache
 
 
-# It's a simple chat command line interface
-def chat_cmd():
-    global query_engine
-    while (input_question := input("Enter your question (or 'exit' to quit): ")) != 'exit':
-        response = query_engine.query(input_question)
-        response.print_response_stream()
+def get_query_response(response) -> str:
+    """
+    Function to query based on the query_engine and query string passed in.
+    """
+    if isinstance(response, StreamingResponse):
+        typed_response = response.get_response()
+    else:
+        typed_response = response
+    response_str = typed_response.response
+    if response_str is None:
+        return ""
+    return response_str
 
 
-if __name__ == '__main__':
-    init_llm()
-    index = init_index()
-    init_query_engine(index)
-    chat_cmd()
+@action(is_system_action=True)
+def user_query(context):
+    query_engine = init_query_engine()
+
+    user_message = context.get("user_message")
+    print('user_message is ', user_message)
+    response = query_engine.query(user_message)
+    return get_query_response(response)
