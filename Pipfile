@@ -18,6 +18,7 @@ langfuse = "*"
 python-dotenv = "==1.0.1"
 gradio = "== 4.25.0"
 requests= "~=2.31.0"
+nemoguardrails = "==0.8.2"
 
 [dev-packages]
 

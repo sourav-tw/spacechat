@@ -1,5 +1,7 @@
+import asyncio
 import logging
 import sys
+from typing import Optional
 
 import chromadb
 from llama_index.core import (
@@ -11,18 +13,21 @@ from llama_index.core import (
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.chroma import ChromaVectorStore
-
+from nemoguardrails.actions import action
 from config import *
 from langfuse_integration import init_langfuse
 from prompts import get_template
+from llm_rails import init_llm_rails
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 global query_engine
 query_engine = None
+global rails
 
 
 def init_llm():
+    global rails
     llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
     Settings.llm = llm
@@ -30,6 +35,8 @@ def init_llm():
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
     init_langfuse()
+    rails = init_llm_rails()
+    rails.register_action(user_query, "user_query")
 
 
 def init_index():
@@ -73,12 +80,20 @@ def chat(input_question):
     return response
 
 
+def user_query(context: Optional[dict] = None):
+    global query_engine
+    question = context.get("user_message")
+    response = query_engine.query(question)
+    res = response.get_response()
+    return res.response
+
+
 # It's a simple chat command line interface
 def chat_cmd():
-    global query_engine
+    global rails
     while (input_question := input("Enter your question (or 'exit' to quit): ")) != 'exit':
-        response = query_engine.query(input_question)
-        response.print_response_stream()
+        res = rails.generate(prompt=input_question)
+        print(res)
 
 
 if __name__ == '__main__':
