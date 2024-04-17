@@ -1,7 +1,7 @@
 models:
  - type: main
    engine: ollama
-   model: mistral
+   model: llama2
 
 instructions:
   - type: general
@@ -12,7 +12,7 @@ instructions:
       If the bot does not know the answer to a question, it truthfully says it does not know.
 
 sample_conversation: |
-  user "Hi there. Can you help me with some questions I have about TBC SPACE credit card?"
+  user "Can you help me with some questions I have about TBC SPACE credit card?"
     express greeting and ask for assistance
   bot express greeting and confirm and offer assistance
     "Hi there! I'm here to help answer any questions you may have about TBC SPACE bank products. What would you like to know?"
