@@ -35,7 +35,7 @@ def chat(input_question):
 
 def init_llm():
     global rails
-    llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
+    llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT, temperature=0.2)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
 
     Settings.llm = llm
