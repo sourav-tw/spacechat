@@ -23,7 +23,7 @@ query_engine = None
 
 
 def init_llm():
-    llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT)
+    llm = Ollama(model=LLM_MODEL, request_timeout=REQUEST_TIMEOUT, temperature=0.2)
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
     Settings.llm = llm
     Settings.embed_model = embed_model

@@ -5,7 +5,7 @@ load_dotenv()
 
 HTTP_PORT = os.getenv('HTTP_PORT', 5000)
 
-LLM_MODEL = os.getenv('LLM_MODEL', "mistral")
+LLM_MODEL = os.getenv('LLM_MODEL', "llama3")
 
 EMBED_MODEL = os.getenv('EMBED_MODEL', "BAAI/bge-small-en-v1.5")
 
