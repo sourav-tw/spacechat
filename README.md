@@ -5,9 +5,10 @@
     <li><a href="#about-the-project">About the Project</a></li>
     <li><a href="#tools-used">Tools Used</a></li>
     <li><a href="#set-up-instruction">Set up instruction</a></li>
-    <li><a href="#prepare-knowledge-base">Prepare the knowledge base</a></li>
-    <li><a href="#run-as-api">Run as a api</a></li>
-    <li><a href="#run-as-cmd">Run from cmd</a></li>
+    <li><a href="#prepare-knowledge-base">Prepare knowledge base</a></li>
+    <li><a href="#run-as-ui">Run as ui</a></li>
+    <li><a href="#run-as-api">Run as api</a></li>
+    <li><a href="#run-as-cmd">Run as cmd</a></li>
   </ul>
 </details>
 <!-- END OF TABLE OF CONTENTS -->
@@ -99,13 +100,22 @@ docker compose up
 <!-- END OF SET UP INSTRUCTION -->
 
 <!-- PREPARE KNOWLEDGE BASE -->
-## Prepare the knowledge base
+## Prepare knowledge base
 1. To prepare the knowledge base create a docs folder in the root of the project directory
 2. Add pdf documents under the docs folder
 <!-- END OF PREPARE KNOWLEDGE BASE -->
 
+<!-- RUN AS UI -->
+## Run as ui
+To run this from a terminal or command prompt, run the following command
+``` bash
+python api.py
+python app.py
+```
+<!-- END OF RUN AS CMD -->
+
 <!-- RUN AS API -->
-## Run as a api
+## Run as api
 1. To run this as an api, run the following command
 ``` bash
 python api.py
@@ -114,7 +124,7 @@ python api.py
 <!-- END OF RUN AS API -->
 
 <!-- RUN AS CMD -->
-## Run from cmd
+## Run as cmd
 To run this from a terminal or command prompt, run the following command
 ``` bash
 python query_model.py
