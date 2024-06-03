@@ -13,7 +13,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
-from langfuse_integration import init_langfuse
+from observability import init_observability
 from prompts import get_template
 from config import *
 
@@ -31,7 +31,7 @@ def init_llm():
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
-    init_langfuse()
+    init_observability()
 
 
 def init_index():
@@ -82,7 +82,7 @@ def chat(input_question):
     return response
 
 
-# Its a simple chat command line interface
+# It's a simple chat command line interface
 def chat_cmd():
     global query_engine
     while (input_question := input("Enter your question (or 'exit' to quit): ")) != 'exit':

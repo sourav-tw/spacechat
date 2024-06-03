@@ -13,7 +13,7 @@ from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
 from config import *
-from langfuse_integration import init_langfuse
+from observability import init_observability
 from prompts import get_template
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,7 +29,7 @@ def init_llm():
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
-    init_langfuse()
+    init_observability()
 
 
 def init_index():
