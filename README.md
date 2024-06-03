@@ -110,6 +110,7 @@ docker compose up
 ## Run as ui
 To run this from a terminal or command prompt, run the following command
 ``` bash
+cd src
 python api.py
 python app.py
 ```
