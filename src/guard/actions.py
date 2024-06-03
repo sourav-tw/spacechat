@@ -17,7 +17,7 @@ from llama_index.core.base.response.schema import StreamingResponse
 from nemoguardrails.actions import action
 from nemoguardrails import LLMRails, RailsConfig
 
-from src.langfuse_integration import init_langfuse
+from src.observability import init_observability
 from src.prompts import get_template
 from src.config import *
 
@@ -42,7 +42,7 @@ def init_llm():
     Settings.embed_model = embed_model
     Settings.chunk_size = CHUNK_SIZE
     Settings.chunk_overlap = CHUNK_OVERLAP
-    init_langfuse()
+    init_observability()
 
     guard = RailsConfig.from_path("./guard")
     rails = LLMRails(guard)

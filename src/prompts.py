@@ -1,14 +1,14 @@
 from llama_index.core import PromptTemplate
 from langfuse import Langfuse
 from src.config import PROMPT_TEMPLATE
-from src.langfuse_integration import is_langfuse_enabled
+from src.observability import is_observability_enabled
 
 
 def get_template():
-    if is_langfuse_enabled() is True:
-        langfuse = Langfuse()
+    if is_observability_enabled() is True:
+        observability = Langfuse()
         try:
-            prompt = langfuse.get_prompt(PROMPT_TEMPLATE)
+            prompt = observability.get_prompt(PROMPT_TEMPLATE)
         except Exception as e:
             print("Error in getting prompt template - ", e)
             return None
